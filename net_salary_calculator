@@ -1,0 +1,45 @@
+function calculateNetSalary(basicSalary, benefits) {
+  
+  const taxRates = [
+    { min: 0, max: 24000, rate: 10.0 },
+    { min: 24001, max: 32333, rate: 25.0 },
+    { min: 32334, max: 500000, rate: 30.0 },
+    { min: 500001, max: 800000, rate: 32.5 },
+    { min: 800001, max: Infinity, rate: 35.0 },
+  ];
+
+
+  const grossSalary = basicSalary + benefits;
+
+  
+  const annualTaxablePay = grossSalary * 12;
+
+  
+  let taxAmount = 0;
+
+  
+  for (const rate of taxRates) {
+    if (annualTaxablePay >= rate.min && annualTaxablePay <= rate.max) {
+      taxAmount = (annualTaxablePay - rate.min) * (rate.rate / 100);
+      break;
+    }
+  }
+
+  
+  const nhifDeductions = 0; 
+  const nssfDeductions = 0; 
+
+
+  const netSalary = grossSalary - taxAmount - nhifDeductions - nssfDeductions;
+
+
+  return {
+    grossSalary,
+    taxAmount,
+    nhifDeductions,
+    nssfDeductions,
+    netSalary,
+  };
+}
+
+
